@@ -1,6 +1,5 @@
 import streamlit as st # type: ignore
 from bjmissouri import Bot, DealerBot, BasicStrategyH17Bot, Shoe, Hand
-import streamlit as st
 st.write("NEW VERSION LIVE")
 def run_shoe(bot, decks=2, balance=1000, h17=True,
              blackjack=1.5, rsa=True, das=True, surrender=True, max_rounds=50):
