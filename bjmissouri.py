@@ -103,22 +103,23 @@ class Hand:
     double = False
     hasBeenSplit = False
     isSoft = False
-    def __init__(self,cards=[],deck=None,hasBeenSplit = False):
-        self.cards = cards
+    def __init__(self, cards=None, deck=None, hasBeenSplit=False):
+        self.cards = cards if cards is not None else []
         self.deck = deck
         self.double = False
         self.hasBeenSplit = hasBeenSplit
         self.isSoft = False
     # Returns blackjack value of the hand
     def val(self):
-        v=0
+        v = 0
         hasAce = False
+        self.isSoft = False  # reset each call
         for x in self.cards:
             v += x.val()
-            if x.val()==1:
+            if x.val() == 1:
                 hasAce = True
-        if hasAce and v<=11:
-            v+=10
+        if hasAce and v <= 11:
+            v += 10
             self.isSoft = True
         return v
     # Adds a card to the hand. Use for hit, double, and split
@@ -201,7 +202,9 @@ class BasicStrategyH17Bot(Bot):
       # Otherwise hit on 8 or less
       if hand.val()<9:
         return 'h'
-      # Otherwise find the play in the HardChart
+      # Otherwise find the play in the HardChart (fallback: stand on 17+, else hit)
+      if hardTuple not in self.HardChart:
+          return 's' if hand.val() >= 17 else 'h'
       p = self.HardChart[hardTuple]
       if p == 'd':
         if 'd' in options:
@@ -220,7 +223,10 @@ class BasicStrategyH17Bot(Bot):
           return 'v'
         else:
           return 'h'
-      p = self.SoftChart[(hand.val(),dealerHand.val())]
+      key = (hand.val(), dealerHand.val())
+      if key not in self.SoftChart:
+          return 's' if hand.val() >= 18 else 'h'
+      p = self.SoftChart[key]
       match(p):
         case 'D':
           if 'd' in options:
@@ -450,8 +456,7 @@ class Game:
               print("Push "+str(2 if hands[h].double else 1)+"\n")
               self.balance += 2 if hands[h].double else 1
         print("\n\nNext hand\n\n")
+
 if __name__ == "__main__":
-        g = Game()
-        g.play(decks=2, shuffle=True, bot=DealerBot())
-
-
+    g = Game()
+    g.play(decks=2, shuffle=True, bot=DealerBot())
