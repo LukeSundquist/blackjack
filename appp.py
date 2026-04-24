@@ -1,7 +1,6 @@
-import streamlit as st
+import streamlit as st # type: ignore
 from bjmissouri import Bot, DealerBot, BasicStrategyH17Bot, Shoe, Hand
 
-# ─── Game logic ──────────────────────────────────────────────────────────────
 def run_shoe(bot, decks=2, balance=1000, h17=True,
              blackjack=1.5, rsa=True, das=True, surrender=True, max_rounds=50):
 
@@ -141,7 +140,7 @@ def run_shoe(bot, decks=2, balance=1000, h17=True,
     return log, balance_history
 
 
-# ─── Streamlit UI ─────────────────────────────────────────────────────────────
+# Streamlit UI 
 st.set_page_config(page_title="Blackjack Bot Runner", layout="wide")
 st.title("🃏 Blackjack Bot Runner")
 
