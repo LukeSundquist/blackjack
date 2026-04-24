@@ -451,6 +451,4 @@ class Game:
               self.balance += 2 if hands[h].double else 1
         print("\n\nNext hand\n\n")
 
-if __name__ == "__main__":
-    g = Game()
-    g.play(...)
+
