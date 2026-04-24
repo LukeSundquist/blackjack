@@ -451,5 +451,6 @@ class Game:
               self.balance += 2 if hands[h].double else 1
         print("\n\nNext hand\n\n")
 
-g = Game()
-g.play(decks=2,shuffle=True,bot=DealerBot())
+if __name__ == "__main__":
+    g = Game()
+    g.play(...)
