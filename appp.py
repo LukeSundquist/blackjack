@@ -1,6 +1,6 @@
 import streamlit as st # type: ignore
 from bjmissouri import Bot, DealerBot, BasicStrategyH17Bot, Shoe, Hand
-st.write("NEW VERSION LIVE")
+
 def run_shoe(bot, decks=2, balance=1000, h17=True,
              blackjack=1.5, rsa=True, das=True, surrender=True, max_rounds=50):
 
@@ -57,9 +57,9 @@ def run_shoe(bot, decks=2, balance=1000, h17=True,
             continue
 
         # Play hands
-        i = 0
+        i=0
         while i < len(hands):
-            if len(hands[i].cards) == 1:
+            if len(hands[i].cards) ==1:
                 hands[i].addCard(1)
             options = ['h', 's']
             if not (das and hands[i].hasBeenSplit):
@@ -170,11 +170,10 @@ with col2:
             bot = DealerBot()
         else:
             bot = BasicStrategyH17Bot(das=das)
-
         log, balance_history = run_shoe(
-            bot=bot, decks=decks, balance=starting_balance,
-            h17=h17, blackjack=blackjack, rsa=rsa, das=das,
-            surrender=surrender, max_rounds=max_rounds
+            bot=bot, decks=decks,balance=starting_balance,
+            h17=h17, blackjack=blackjack,rsa=rsa, das=das,
+            surrender=surrender,max_rounds=max_rounds
         )
 
         profit = balance_history[-1] - balance_history[0]
